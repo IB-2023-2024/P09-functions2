@@ -184,9 +184,9 @@ reales y devuelva su producto escalar, calculado como el sumatorio del producto 
 
 $$[a1, a2, a3] \cdot [b1, b2, b3] = a1 * b1 + a2 * b2 + a3 * b3$$
 
-Si la función detecta que los vectores no tienen la misma longitud, debe mostrar un mensaje de error y devolver 0.
+  Si la función detecta que los vectores no tienen la misma longitud, debe mostrar un mensaje de error y devolver 0.
 
-3. Escriba un programa `capitalize_vowels.cc`que incluya una función que tome como parámetro una cadena de caracteres sin
+2. Escriba un programa `capitalize_vowels.cc`que incluya una función que tome como parámetro una cadena de caracteres sin
 espacios y la modifuque de forma que queden las consonantes en minúscula y las vocales en mayúscula.
 Los caracteres que no sean letras mayúsculas ni minúsculas deberán permanecer inalterados.
 
