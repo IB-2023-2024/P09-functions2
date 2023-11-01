@@ -182,7 +182,7 @@ independiente para cada programa e inclúyalo en el correspondiente directorio.
 1. Escriba un programa `scalar_product.cc` que utilice una función que tome como parámetros dos vectores de números
 reales y devuelva su producto escalar, calculado como el sumatorio del producto de sus elementos en igual posición
 
-$$[a1, a2, a3] \cdot [b1, b2, b3] = [a1 \times b1, a2 \times b2, a3 \times b3]$$
+$$[a1, a2, a3] \cdot [b1, b2, b3] = a1 * b1 + a2 * b2 + a3 * b3$$
 
 Si la función detecta que los vectores no tienen la misma longitud, debe mostrar un mensaje de error y devolver 0.
 
@@ -202,7 +202,7 @@ AlFa2022        AlfA2022
 reales `coefficients` y un valor real `value` y calcule el valor del polinomio correspondiente en el valor dado, usando
 el siguiente esquema:
 
-$$(...(((coef_0 * value + coef_1) * value + coef_2) * value + coef_3) * value + ...) * value + coef_{N-1}$$
+$$(...(((coef_0 * value + coef_1) * value + coef_2) * value + coef_3) * value + coef_4) * value + ...) * value + coef_{N-1}$$
 
 ```
 Public test cases
@@ -217,15 +217,17 @@ cero `number` y devuelva su raíz cuadrada con un error de ±`EPSILON` (donde `E
 suficientemente pequeña - por ejemplo, `1e-4`). La función debe usar internamente dos valores reales `root` y `delta`
 con cualesquiera valores iniciales (se recomienda 1.0 para ambos) y seguir el siguiente procedimiento:
 
-  - Mientras que la diferencia entre `root`² y `number` sea mayor que `EPSILON`:
-    - si `delta` es positivo: mientras que `root`² sea __menor__ que `number`, sume `delta` a `root`.
-    - en caso contrario: mientras que `root`² sea __mayor__ que `number`, sume `delta` a `root`.
-    - multiplique `delta` por -0.5.
-  - Devuelva el valor *raíz*.
+    - Mientras que la diferencia entre `root`² y `number` sea mayor que `EPSILON`:
+      - si `delta` es positivo: mientras que `root`² sea __menor__ que `number`, sume `delta` a `root`.
+      - en caso contrario: mientras que `root`² sea __mayor__ que `number`, sume `delta` a `root`.
+      - multiplique `delta` por -0.5.
+    - Devuelva el valor `root`.
 
 5. Desarrolle un programa `hypotenuse.cc` que utilice incluya una función que tome como parámetros los catetos de un
 triángulo rectángulo, como valores reales, y devuelva su hipotenusa, haciendo uso de la función implementada en el
 ejercicio 3 para calcularla.
+
+$$hipotenusa = \sqrt{cateto_1^2 + cateto_2^2}$$
 
 ```
 Public test cases
