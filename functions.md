@@ -227,7 +227,7 @@ con cualesquiera valores iniciales (se recomienda 1.0 para ambos) y seguir el si
 triángulo rectángulo, como valores reales, y devuelva su hipotenusa, haciendo uso de la función implementada en el
 ejercicio 3 para calcularla.
 
-$$hipotenusa = \sqrt{cateto_1^2 + cateto_2^2}$$
+$$hipotenusa = \sqrt{cateto1^2 + cateto2^2}$$
 
 ```
 Public test cases
