@@ -149,6 +149,81 @@ documentación (Doxygen) del proyecto ni construye ninguna librería que se enla
 Puede utilizar este fichero (renombrándolo a `CMakeLists.txt`) como "plantilla" adaptándolo de ahora en 
 adelante a cada uno de sus proyectos de programación en C++.
 
+### Expresiones constantes
+
+Cuando se declara una constante usando la etiqueta `const`, el compilador comprobará implícitamente si es una constante *en tiempo de compilación* o *en tiempo de ejecución*. En la mayoría de los casos, esto sólo es relevante para la optimización del código, pero hay casos en los que C++ requiere una expresión constante que sólo use valores definidos en tiempo de compilación. Como este tipo de constantes permiten una mejor optimización, en general siempre intentaremos que las constantes sean evaluables en tiempo de compilación.
+
+Que una constante sea evaluable en tiempo de compilación o en tiempo de ejecución depende si su inicialización se pueda realizar durante la compilación. En algunos casos, esto puede ser difícil de determinar. Por ejemplo:
+
+```
+int x{5};                 // no es constante
+const int y{x};           // constante en ejecución, su inicializador no es constante
+const int z{5};           // constante en compilación, su inicializador es una expresión constante
+const int w{getValue()};  // no está claro, depende de cómo se haya definido getValue()
+```
+
+Afortunadamente, se puede indicar al compilador cuándo necesitamos que una constante sea evaluable en tiempo de compilación. Para ello, se usa la etiqueta `constexpr` en lugar de `const`. Una `constexpr` ("expresión constante") sólo puede ser evaluada en tiempo de compilación. Si su inicializador no es una expresión constante, el compilador dará un error.
+
+```
+#include <iostream>
+
+int five() {
+  return 5;
+}
+
+int main() {
+  constexpr double gravity{9.8};  // correcto: 9.8 es una expresión constante
+  constexpr int sum{4 + 5};       // correcto: 4 + 5 es una expresión constante
+  constexpr int something{sum};   // correcto: sum es una expresión constante
+
+  int age;
+  std::cin >> age;
+  constexpr int myAge{age};  // error: age no es una expresión constante
+  constexpr int f{five()};   // error: el valor de retorno de five() no es una expresión constante
+  return 0;
+}
+```
+
+Como buena práctica, todo valor que no deba ser modificado tras su inicialización debería declararse:
+
+- como `constexpr`, si su valor se conoce en tiempo de compilación
+- como `const`, si su valor no se conoce en tiempo de compilación
+
+Téngase en cuenta que algunos tipos de datos que reservan memoria dinámicamente, tales como `std::string` y `std::vector`, no son compatibles con `constexpr`; para constantes de estos tipos, se debe usar `const`. Asimismo, los parámetros de las funciones siempre se evalúan en tiempo de ejecución y, por tanto, no pueden ser declaradas como `constexpr`.
+
+En algunos contextos, el compilador puede decidir que no es necesario evaluar una expresión en tiempo de compilación.
+
+```
+constexpr int x{3 + 4};  // 3 + 4 siempre se evaluará en tiempo de compilación
+const int x{3 + 4};      // 3 + 4 siempre se evaluará en tiempo de compilación
+int x{3 + 4};            // 3 + 4 puede que se evalúe en tiempo de compilación o en tiempo de ejecución
+```
+
+Considere el siguiente ejemplo:
+
+```
+#include <iostream>
+
+int main() {
+	constexpr int x { 3 + 4 }; // 3 + 4 es una expresión constante
+	std::cout << x;            // Se evalúa en tiempo de ejecución
+	return 0;
+}
+```
+
+`3 + 4` es una expresión constante, así que el compilador la evaluará en tiempo de compilación y la sustituirá por el valor `7`. Pero como `x` es también una constante en tiempo de compilación, el compilador probablemente optimizará el programa sustituyendo `std::cout << x` por `std::cout << 7`, que se ejecutará en tiempo de ejecución. Sin embargo, como `x` sólo se usa una vez, es más probable que el compilador optimice el programa eliminando `x` antes de evaluar `3 + 4`:
+
+```
+#include <iostream>
+
+int main() {
+	std::cout << 3 + 4;  // Se evalúa en tiempo de ejecución
+	return 0;
+}
+```
+
+La expresión `std::cout << 3 + 4` ya no es constante, así que surge la duda de si la subexpresión `3 + 4` se evaluaría en tiempo de compilación o no. En general sí se optimizará, ya que los compiladores son capaces de detectar subexpresiones constantes incluso si son parte de expresiones en tiempo de ejecución. A este proceso de optimización se le conoce como *"constant folding"* ("plegado de constantes"). Etiquetar las expresiones constantes como `constexpr` asegura que dichos valores sean reconocidos por el plegado de constantes siempre que estas se usen en una expresión en tiempo de ejecución.
+
 ### Material de estudio complementario
 Estudie todo lo que se indica en el epígrafe 
 [Functions](https://google.github.io/styleguide/cppguide.html#Functions)
@@ -164,6 +239,7 @@ en la asignatura los siguientes apartados:
 * [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/)
 * [Scope, duration, and linkage summary](https://www.learncpp.com/cpp-tutorial/scope-duration-and-linkage-summary/)
 * [Command line arguments](https://www.learncpp.com/cpp-tutorial/command-line-arguments/)
+* [Constant expressions](https://www.learncpp.com/cpp-tutorial/constexpr-variables/)
 
 ### Ejercicios
 * Al realizar los ejercicios cree dentro de su repositorio de esta práctica un directorio diferente
