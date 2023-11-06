@@ -1,4 +1,4 @@
-# Práctica 09. Funciones. CMake.
+# Práctica 09. Funciones. CMake. Expresiones constantes.
 
 # Factor de ponderación: 7
 
