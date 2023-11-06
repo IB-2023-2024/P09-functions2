@@ -156,10 +156,10 @@ Cuando se declara una constante usando la etiqueta `const`, el compilador compro
 Que una constante sea evaluable en tiempo de compilación o en tiempo de ejecución depende si su inicialización se pueda realizar durante la compilación. En algunos casos, esto puede ser difícil de determinar. Por ejemplo:
 
 ```
-int x{5};                 // no es constante
-const int y{x};           // constante en ejecución, su inicializador no es constante
-const int z{5};           // constante en compilación, su inicializador es una expresión constante
-const int w{getValue()};  // no está claro, depende de cómo se haya definido getValue()
+int variable{5};               // no es constante
+const int my_var1{x};          // constante en ejecución, su inicializador no es constante
+const int my_var2{5};          // constante en compilación, su inicializador es una expresión constante
+const int result{getValue()};  // no está claro, depende de cómo se haya definido getValue()
 ```
 
 Afortunadamente, se puede indicar al compilador cuándo necesitamos que una constante sea evaluable en tiempo de compilación. Para ello, se usa la etiqueta `constexpr` en lugar de `const`. Una `constexpr` ("expresión constante") sólo puede ser evaluada en tiempo de compilación. Si su inicializador no es una expresión constante, el compilador dará un error.
@@ -167,7 +167,7 @@ Afortunadamente, se puede indicar al compilador cuándo necesitamos que una cons
 ```
 #include <iostream>
 
-int five() {
+int Five() {
   return 5;
 }
 
@@ -178,8 +178,8 @@ int main() {
 
   int age;
   std::cin >> age;
-  constexpr int myAge{age};  // error: age no es una expresión constante
-  constexpr int f{five()};   // error: el valor de retorno de five() no es una expresión constante
+  constexpr int myAge{age};      // error: age no es una expresión constante
+  constexpr int young{Five()};   // error: el valor de retorno de five() no es una expresión constante
   return 0;
 }
 ```
@@ -194,9 +194,9 @@ Téngase en cuenta que algunos tipos de datos que reservan memoria dinámicament
 En algunos contextos, el compilador puede decidir que no es necesario evaluar una expresión en tiempo de compilación.
 
 ```
-constexpr int x{3 + 4};  // 3 + 4 siempre se evaluará en tiempo de compilación
-const int x{3 + 4};      // 3 + 4 siempre se evaluará en tiempo de compilación
-int x{3 + 4};            // 3 + 4 puede que se evalúe en tiempo de compilación o en tiempo de ejecución
+constexpr int variable{3 + 4};  // 3 + 4 siempre se evaluará en tiempo de compilación
+const int my_var{3 + 4};        // 3 + 4 siempre se evaluará en tiempo de compilación
+int result{3 + 4};              // 3 + 4 puede que se evalúe en tiempo de compilación o en tiempo de ejecución
 ```
 
 Considere el siguiente ejemplo:
@@ -205,9 +205,9 @@ Considere el siguiente ejemplo:
 #include <iostream>
 
 int main() {
-	constexpr int x { 3 + 4 }; // 3 + 4 es una expresión constante
-	std::cout << x;            // Se evalúa en tiempo de ejecución
-	return 0;
+  constexpr int x { 3 + 4 }; // 3 + 4 es una expresión constante
+  std::cout << x;            // Se evalúa en tiempo de ejecución
+  return 0;
 }
 ```
 
@@ -217,8 +217,8 @@ int main() {
 #include <iostream>
 
 int main() {
-	std::cout << 3 + 4;  // Se evalúa en tiempo de ejecución
-	return 0;
+  std::cout << 3 + 4;  // Se evalúa en tiempo de ejecución
+  return 0;
 }
 ```
 
