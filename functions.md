@@ -1,6 +1,6 @@
 # Práctica 09. Funciones. CMake. Expresiones constantes.
 
-# Factor de ponderación: 7
+# Factor de ponderación: 8
 
 ### Objetivos
 Los objetivos de esta práctica son que el alumnado:
