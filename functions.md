@@ -126,6 +126,8 @@ Al efecto de ilustrar este proceso, se crea una librería `libtools.a` que se al
 El programa binario (`fibonacci_sum`) se construye enlazando esta librería con el resto del código objeto
 producto de la compilación.
 
+> Observe que el directorio `fibonacci_sum/doc` no está presente en el repositorio, debe incluirse manualmente con `mkdir` antes de efectuar la construcción del programa.
+
 Para construir la aplicación, siga los siguientes pasos (que son los habituales):
 ```
 $ cd fibonacci_sum
