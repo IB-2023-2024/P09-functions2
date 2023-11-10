@@ -303,7 +303,7 @@ con cualesquiera valores iniciales (se recomienda 1.0 para ambos) y seguir el si
 
 5. Desarrolle un programa `hypotenuse.cc` que utilice incluya una función que tome como parámetros los catetos de un
 triángulo rectángulo, como valores reales, y devuelva su hipotenusa, haciendo uso de la función implementada en el
-ejercicio 3 para calcularla.
+ejercicio 4 para calcularla.
 
 $$hipotenusa = \sqrt{cateto1^2 + cateto2^2}$$
 
